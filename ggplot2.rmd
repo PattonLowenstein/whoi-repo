@@ -66,7 +66,8 @@ ggplot(se, aes(year, visitors)) +
   ylab("Visitation") +
   ggtitle("Visitation to Southeastern National Parks") +
   theme(legend.title = element_blank(),
-      axis.text.x = element_text(angle = 45, hjust = 1, size = 14))
+      axis.text.x = element_text(angle = 45, hjust = 1, size = 14)) +
+  theme_minimal()
   
 
 ```
