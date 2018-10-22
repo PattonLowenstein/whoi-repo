@@ -112,6 +112,17 @@ max(egviet$gdpPercap)
 
 gapminder %>% mutate(max_of_egy_viet = 5581.181)
 
+# slightly different exercise
+gapminder %>% 
+  filter(country %in% c("Egypt", "Vietnam")) %>% 
+  mutate(gdp = pop * gdpPercap) %>% 
+  mutate(max_gdp = max(gdp))
+
+
+gapminder %>% 
+  filter(country %in% c("Egypt", "Vietnam")) %>% 
+  mutate(gdp = pop * gdpPercap, 
+          max_gdp = max(gdp))
 ```
 
 
