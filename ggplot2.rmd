@@ -73,4 +73,60 @@ ggplot(se, aes(year, visitors)) +
 ```
 
 
+```{r}
+ggplot(se, aes(year, visitors, color = park_name)) +
+  geom_point() +
+  facet_wrap(~ state, scales = "free") + #scales attribute separates the axis scales in each plot
+  theme(axis.text.x = element_text(angle = 90)) #otherwise NC makes the others trapped on a small scale
+```
+
+```{r}
+ggplot(se, aes(park_name, visitors, color = "park_name"))+
+  geom_jitter(alpha = 0.4, width = 0.1) +
+  coord_flip()+
+  xlab("Visitors") +
+  ylab("Park Name") +
+  ggtitle("Visitors to Southeastern Parks")
+```
+
+
+```{r}
+ggplot(se, aes(year, visitors, color = park_name))+
+  geom_line(size = 1.6)+
+  theme_bw()+
+  ggtitle("Visitors")+
+  theme(plot.title = element_text(hjust = 0.5)) #centers plot title
+  
+```
+
+```{r}
+ggplot(acadia, aes(year, visitors))+
+  geom_point()+
+  geom_line()+
+  geom_smooth(aes(color = "red"))
+```
+
+```{r}
+install.packages("ggthemes")
+library(ggthemes)
+
+
+```
+
+# Bar Charts
+
+```{r}
+ggplot(visit_16, aes(state, visitors, fill = park_name))+
+  geom_bar(stat = "identity", position = "dodge") #enables y variables in geom_bar, position separates the columns
+```
+
+
+```{r}
+my_plot <- ggplot(visit_16, aes(state, visitors, fill = park_name))+
+            geom_bar(stat = "identity", position = "dodge")
+
+my_plot
+
+ggsave(filename = "myplot.png", myplot)
+```
 
