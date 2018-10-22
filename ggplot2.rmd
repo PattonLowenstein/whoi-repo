@@ -40,12 +40,6 @@ mass <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-tra
 
 Start with California ('ca') dataset
 
-```{r}
-head(ca)
-View(ca)
-
-```
-
 Plot visitation to all CA National Parks over time
 
 ```{r}
@@ -106,12 +100,6 @@ ggplot(acadia, aes(year, visitors))+
   geom_smooth(aes(color = "red"))
 ```
 
-```{r}
-install.packages("ggthemes")
-library(ggthemes)
-
-
-```
 
 # Bar Charts
 
@@ -122,11 +110,20 @@ ggplot(visit_16, aes(state, visitors, fill = park_name))+
 
 
 ```{r}
+
 my_plot <- ggplot(visit_16, aes(state, visitors, fill = park_name))+
             geom_bar(stat = "identity", position = "dodge")
 
 my_plot
 
-ggsave(filename = "myplot.png", myplot)
+ggsave(filename = "myplot.png", myplot, width = 10, height = 10, dpi = 300) # can determine output size and resolution in attributes
+```
+
+
+```{r}
+bubbles <- ggplot(visit_16, aes(state, park_name))+
+            geom_count()
+
+bubbles
 ```
 
