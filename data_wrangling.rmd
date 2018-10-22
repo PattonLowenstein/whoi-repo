@@ -25,7 +25,7 @@ summary(gapminder) #tells you min, max, mean, etc--glance at variables, not real
 #install.packages("skimr")
 library(skimr)
 skimr::skim(gapminder) #skimr::skim syntax is more for personal reminder 
-                        #tells you more stats--stdev, percentiles...more?
+#tells you more stats--stdev, percentiles...more?
 
 names(gapminder) #returns column names in case you need to batch rename them
 dim(gapminder)  #tells you dimensions -- rows and columns of the set
@@ -36,4 +36,93 @@ nrow(gapminder) #number of rows
 c(nrow(gapminder), ncol(gapminder)) #concatenates number of rows and columns
 
 ```
+
+## Dplyr!
+
+```{r}
+# most used functions are filter(), select(), mutate(), summarize(), arrange()
+# first argument is always the data, subsequent args are what you want to do with it
+# you can refer to columns in dataframe without using $, which is kinda messy (but I like it!)
+# the result is a new df
+
+# filter by rows
+filter(gapminder, lifeExp < 29) # subset based on life exp < 29
+# gives entire df back based on arguments
+filter(gapminder, country == "Mexico")
+filter(gapminder, country %in% c("Mexico", "Peru", "Brazil")) # using %in% allows filter() to search more than one argument/return a list
+filter(gapminder, country == "Mexico", year == 2002)
+
+#find mean lifeExp of Sweden
+sweden <- filter(gapminder, country == "Sweden")
+average <- mean(sweden$lifeExp)
+average
+```
+
+```{r}
+#select by columns
+select(gapminder, year, lifeExp)  # select only these columns
+select(gapminder, -continent, -liftExp) # - will exclude these columns
+
+# use select and filter together
+gap_cambodia <- filter(gapminder, country == "Cambodia")
+gap_cambodia
+gap_cambodia2 <- select(gap_cambodia, -continent, - lifeExp)
+gap_cambodia2
+# the above is hella wordy
+#time to learn about the pipe operator--it will change your life
+```
+
+
+```{r}
+gapminder %>% head(3)  # this is equivalent to head(gapminder, 3) -- not super impressive
+
+gap_cambodia <- filter(gapminder, country == "Cambodia")
+gap_cambodia2 <- select(gap_cambodia, -continent, - lifeExp)
+
+gap_cambodia <- gapminder %>% filter(country == "Cambodia")
+gap_cambodia2 <- gap_cambodia %>% select(-continent, -lifeExp) #  still wordy
+
+gap_cambodia <- gapminder %>%         # much clearer
+  filter(country == "Cambodia") %>%
+  select(-continent, -lifeExp)
+gap_cambodia
+
+```
+
+
+```{r}
+# mutate adds new variables
+gapminder %>% 
+  mutate(numbers = 1:nrow(gapminder)) # adds a column index for each row
+
+gapminder %>% 
+  mutate(planet = "Earth")
+
+gapminder %>% 
+  mutate(gdp = pop * gdpPercap)
+```
+
+```{r}
+# find the max gdp per cap of Egypt and Vietnam and create a new column
+
+egviet <- gapminder %>% 
+  filter(country %in% c("Egypt", "Vietnam"))
+
+max(egviet$gdpPercap)
+
+gapminder %>% mutate(max_of_egy_viet = 5581.181)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
