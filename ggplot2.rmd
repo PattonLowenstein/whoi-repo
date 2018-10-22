@@ -5,7 +5,71 @@ date: "10/22/18"
 output: html_document
 ---
 
+www.github.com
+[GitHub]www.github.com
 
 # Learning ggplot2
 
 We're learning ggplot2 and it's going to be great.
+
+
+```{r}
+
+#install packages
+#install.packages("tidyverse")
+library(tidyverse)
+```
+
+
+```{r load_data}
+#National Parks in California
+ca <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/ca.csv") 
+
+#Acadia National Park
+acadia <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/acadia.csv")
+
+#Southeast US National Parks
+se <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/se.csv")
+
+#2016 Visitation for all Pacific West National Parks
+visit_16 <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/visit_16.csv")
+
+#All Nationally designated sites in Massachusetts
+mass <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/mass.csv")
+```
+
+Start with California ('ca') dataset
+
+```{r}
+head(ca)
+View(ca)
+
+```
+
+Plot visitation to all CA National Parks over time
+
+```{r}
+ggplot(ca, aes(year, visitors)) +
+  geom_point(aes(color = park_name)) +
+  labs(x = "Year",  #labels
+       y = "Visitation", 
+       title = "California National Park Visitation")+
+  theme_bw() + #changes background to black and white
+  theme(legend.title = element_blank()) + #gets rid of legend title
+  theme(plot.title = element_text(hjust = 0.5)) #centers plot title
+```
+
+```{r}
+ggplot(se, aes(year, visitors)) +
+  geom_point(aes(color = state)) +
+  xlab("Year") +
+  ylab("Visitation") +
+  ggtitle("Visitation to Southeastern National Parks") +
+  theme(legend.title = element_blank(),
+      axis.text.x = element_text(angle = 45, hjust = 1, size = 14))
+  
+
+```
+
+
+
