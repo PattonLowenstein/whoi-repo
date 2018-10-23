@@ -125,6 +125,36 @@ gapminder %>%
           max_gdp = max(gdp))
 ```
 
+## group_by() groups
+
+```{r}
+## with mutate()
+new_gap <- gapminder %>%  # group by country, then apply a function to those groups, then ungroup
+  group_by(country) %>%   # allows you to do it by study site or by day or something
+  mutate(gdp = gdpPercap * pop,
+         max_gdp = max(gdp)) %>% 
+  ungroup()
+
+##with summarize
+gap_summed <- gapminder %>%  # group by country, then apply a function to those groups, then ungroup
+  group_by(country) %>%   # allows you to do it by study site or by day or something
+  mutate(gdp = gdpPercap * pop) %>% 
+  summarize(max_gdp = max(gdp)) %>% 
+  ungroup()
+```
+
+## 'arrange()' arranges columns
+```{r}
+gap_arranged <- gapminder %>%  
+  group_by(country) %>%   
+  mutate(gdp = gdpPercap * pop) %>% 
+  summarize(max_gdp = max(gdp)) %>% 
+  ungroup() %>% 
+  arrange(desc(max_gdp)) ## default setting for arrange() is in ascending order--desc() flips it
+
+```
+
+
 
 
 
