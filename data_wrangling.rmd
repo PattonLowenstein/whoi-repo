@@ -154,6 +154,56 @@ gap_arranged <- gapminder %>%
 
 ```
 
+## joining datasets
+```{r}
+#left_join keeps everything from the left table and matches as much as it can from the right table. In R, the first thing that you type will be the left table (because it’s on the left)
+#right_join keeps everything from the right table and matches as much as it can from the left table
+#inner_join only keeps the observations that are similar between the two tables
+#full_join keeps all observations from both tables.
+
+## read in the data. (same URL as yesterday, with co2.csv instead of gapminder.csv)
+co2 <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/co2.csv")
+
+## explore
+co2 %>% head()
+co2 %>% dim() # 12
+
+## create new variable that is only 2007 data
+gap_2007 <- gapminder %>%
+  filter(year == 2007) 
+gap_2007 %>% dim() # 142  
+
+new_2007 <- gapminder %>%   # practice
+  filter(year == 2007)
+new_2007 %>% dim()
+
+## left_join gap_2007 to co2
+lj <- left_join(gap_2007, co2, by="country")
+
+left <- left_join(new_2007, co2, by = "country") # messing around
+
+right <- right_join(new_2007, co2, by = "country")  # messing around
+
+no_na_join <- inner_join(new_2007, co2, by="country") #wanted to have no "NA" cells
+
+## explore
+lj %>% dim() #142
+lj %>% summary() # lots of NAs in the co2_2017 columm
+lj %>% View() 
+
+## right_join gap_2007 and co2
+rj <- right_join(gap_2007, co2) # this will work--R will look between column names and see where they can match up--however, it's not a great idea to do this because it makes the code less clear
+
+
+
+## explore
+rj %>% dim() # 12
+rj %>% summary()
+rj %>% View() 
+
+```
+
+
 
 
 
